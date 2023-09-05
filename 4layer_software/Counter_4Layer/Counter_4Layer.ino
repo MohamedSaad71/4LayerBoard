@@ -55,7 +55,7 @@ ISR(TIMER0_COMPA_vect)
   int currentAnalogValue1 = analogRead(A2);
   int smoothedValue1 = (prevAnalogValue1 + currentAnalogValue1) / 2;
   prevAnalogValue1 = currentAnalogValue1;
-   diff1 = smoothedValue1 - ref1;
+  diff1 = smoothedValue1 - ref1;
   
 
   
@@ -220,10 +220,6 @@ void loop()
   
   
 }
-
-
-
-
 void set_ref(){
 
   ref1=analogRead(A2);
@@ -242,7 +238,7 @@ void set_ref(){
   Serial.println("Done");
   Counter_Set = 1;
   ref1=ref1-2;
-  Reff=ref1; /*This is the reference taken after the reset */
+  Reff=ref1; /***This is the reference taken after the reset ***/
   counter =0;
   }
 
