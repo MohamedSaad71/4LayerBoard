@@ -26,7 +26,7 @@
 #define valve1 45
 #define valve2 44
 #define mega_send 60
-/***************** objects and classes ***********************/
+/*********************** objects and classes ********************************/
 DynamicJsonBuffer jsonBuffer; //create json object
 DHT dht(DHTPIN, DHTTYPE); //create a dht11 object
 RTC_DS1307 rtc; // Create a RealTimeClock object
