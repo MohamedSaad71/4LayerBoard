@@ -1,0 +1,10 @@
+NEW
+const char URL[] = "http://trapsnos.epcmms.com/api/Traps/LoadData2";//api for recieving data 
+const char URL2[] = "http://trapsnos.epcmms.com/api/Reading";//api to send data
+const char URL3[] = "http://trapsnos.epcmms.com/api/TrapEmergencies/AddTrapEmergency";
+
+
+OLD
+const char URL[] = "http://appno.epcmms.com/api/Traps/LoadData2";//api for recieving data 
+const char URL2[] = "http://appno.epcmms.com/api/Reading";//api to send data
+const char URL3[] = "http://appno.epcmms.com/api/TrapEmergencies/AddTrapEmergency";
