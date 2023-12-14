@@ -38,6 +38,7 @@ int obstacle_flag;
 int wind_value;
 int Counter_Set = 0;
 int Reset = 0;
+int Send_Flag=0;
 /************************* Variables to read the analog values to classify ****************************/
 int size1;
 int small;
@@ -93,6 +94,10 @@ void loop()
   {
     buzzer_on();
   }
+  if(Receive == 'S')
+  {
+    Send_Flag = 1;
+  }
   
   if(Reset >= 3)
   {
@@ -103,7 +108,7 @@ void loop()
   }
   
   //Serial.println(digitalRead(13));
-  if(digitalRead(Send_Pin)== HIGH)
+  if(Send_Flag)
   {
 
     Reset++;
@@ -143,6 +148,7 @@ void loop()
     fly = 0;
     counter = 0;
     obstacle_flag = 0;
+    Send_Flag = 0;
     delay(2000);
   }
   
