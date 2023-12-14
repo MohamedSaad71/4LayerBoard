@@ -29,7 +29,7 @@ char Send[80] = {0};
 /**********************************************************************/
 /*This value is set only at the beginning of the project only once*/
 int Reference_value=925;  /* This value is the refrence value of the receivers */
-int voltage = 100;
+int voltage = 110;
 /*********************************************************************/
 int Reff;
 int ref1;
@@ -97,6 +97,7 @@ void loop()
   if(Receive == 'S')
   {
     Send_Flag = 1;
+    Receive = ' ';
   }
   
   if(Reset >= 3)
@@ -110,7 +111,7 @@ void loop()
   //Serial.println(digitalRead(13));
   if(Send_Flag)
   {
-
+    Send_Flag = 0;
     Reset++;
     buzzer_off();
     wind_value = analogRead(Wind_Pin);
@@ -148,7 +149,7 @@ void loop()
     fly = 0;
     counter = 0;
     obstacle_flag = 0;
-    Send_Flag = 0;
+    
     delay(2000);
   }
   
@@ -248,20 +249,38 @@ void set_ref()
 {
 
   Counter_Set = 1;
-  
-  while(analogRead(A2)<920 || analogRead(A2)>980)
+  Serial.print("Original Reff:");
+  Serial.println(analogRead(A2));
+  while(analogRead(A2)<970 || analogRead(A2)>985)
   {
-    if(analogRead(A2) >980){
-  voltage += 2;
-  analogWrite(9,voltage);      // Control Power 
-  delay(5);
+    if(analogRead(A2) >985)
+   {
+    voltage += 2;
+    analogWrite(9,voltage);      // Control Power 
+    delay(5);
+   }
+  else if(analogRead(A2) <970)
+   {
+    voltage -= 2;
+    analogWrite(9,voltage);      // Control Power 
+    delay(5);
+   }
   }
-  else if(analogRead(A2) <920){
-  voltage -= 2;
-  analogWrite(9,voltage);      // Control Power 
-  delay(5);
-  }
-  }
+//  if(analogRead(A2) >=930 && analogRead(A2) <940)
+//  {
+//    frequency = 40000;
+//  }
+//  else if(analogRead(A2) >=940 && analogRead(A2) <950)
+//  {
+//    frequency = 44000;
+//  }
+//  else if (analogRead(A2) >=950 && analogRead(A2) <960)
+//  {
+//    frequency = 48000;
+//  }
+//  SetPinFrequencySafe(9, frequency);
+  Serial.print("Frequency:");
+  Serial.println(frequency);
   ref1=analogRead(A2);
   while(millis() < 40000)
   {
