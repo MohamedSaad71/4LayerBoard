@@ -4,7 +4,7 @@ char data[400]; //used to collect and send data
 char emergency[100];//used to collect emergency data
 uint16_t rc = 0;//to document http reply
 const char CONTENT_TYPE[] = "application/json";
-const char URL[]  = "http://trapsnos.epcmms.com/api/Traps/LoadData2";//api for recieving data 
+const char URL[] = "http://trapsnos.epcmms.com/api/Traps/LoadData2";//api for recieving data 
 const char URL2[] = "http://trapsnos.epcmms.com/api/Reading";//api to send data
 const char URL3[] = "http://trapsnos.epcmms.com/api/TrapEmergencies/AddTrapEmergency";
 bool connected = false;
@@ -18,10 +18,10 @@ int i=0, j=0; // for saving the data from the counter to array
 String counter[6];// Holding the counters
 String c="";//used to hold data from counter
 
-char small[8] = "0";
-char meduim[8] = "0";
-char large[8] = "0";
-char fly[8] = "0";
+char small[8];
+char meduim[8];
+char large[8];
+char fly[8];
 
 //flags to create new file in case of date change
 int Day_flag=0;
@@ -111,10 +111,10 @@ void ReceiveData_counter()
    new_fly = counter[3].toInt() + old_fly;
    EEPROM.write(7, new_fly);
 
-   String small_read_ee = String(EEPROM.read(3));
+   String small_read_ee  = String(EEPROM.read(3));
    String meduim_read_ee = String(EEPROM.read(4));
-   String large_read_ee = String(EEPROM.read(5));
-   String fly_read_ee = String(EEPROM.read(7));
+   String large_read_ee  = String(EEPROM.read(5));
+   String fly_read_ee    = String(EEPROM.read(7));
 
    Serial.print("small=");
    Serial.println(EEPROM.read(3));
@@ -236,7 +236,7 @@ void check_recieve(){
       }
     else if (val2 == "75") {
        valve_new = map(75, 0, 100, 0, 64000);
-       valve_start(valve_new);
+     //  valve_start(valve_new);
       }
     else if (val2 == "100") {
        valve_new = map(100, 0, 100, 0, 64000);
@@ -300,7 +300,7 @@ void send_data(){
   }
  //  int readingtime = (now.hour()*4) + (now.minute()/15);   /**********uncomment****************/
   sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\"}"
-          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, lat, lon, 0, CO2_value,counter[4]);
+          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, "60", "50", 0, CO2_value,"");
   
   /*******************uncomment also********************/
   /*
@@ -496,7 +496,7 @@ void emergency_send(){
   sprintf(data, "{\"serialNumber\":%s,\"date\":\"%s %s\",\"lat\":\"%s\",\"long\":\"%s\"}"
           , Serialnumber, Date,Time, lat, lon);
   
-  //Serial.println(data);
+  Serial.println(data);
   Serial.println(F("Start emergency POST Data..."));
   // Do HTTP POS"T communication with 10s for the timeout (read and write)
   rc = sim800l->doPost(URL3, CONTENT_TYPE, data, 20000, 20000);

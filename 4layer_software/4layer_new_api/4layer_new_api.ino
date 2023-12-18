@@ -39,12 +39,11 @@ MG811 mySensor = MG811(A8); // Analog input A14 for CO2
 float lati, loni;//latitude and longitude for gps
 char lat[20], lon[20];//char array to make ready for send to http
 String la, lo = "";//string for collect data of gps
-
 int flag = 0; //to insure gprs doesn't send twice in same minute
 int flag2 =0;// to prevent stm stuck if power off
 int flag3=0; //to prevent recieving data multiple times from stm every three minutes
 char battery_flag=14; //to check if small battery needs charging
-char send_flag = 10;
+char send_flag = 16;
 int stmflag=0; //to request data only once from stm
 int big_battery_percent;
 int small_battery_percent;
@@ -61,27 +60,25 @@ char filename[30]; //array of characters in which the string value of FilName_SD
 float v400 = 4.535; //variable for co2 sensor
 float v40000 = 3.206; //variable for co2 sensor
 
-const char Serialnumber[]= "\"eg-123-2020-098164\"";
+const char Serialnumber[]= "\"eg-123-2020-098165\"";
 
 // Define the input and output ranges
 const int INPUT_START = 1;
 const int INPUT_END = 100;
 const int OUTPUT_START = 10;
 const int OUTPUT_END = 64000;
-
 void setup() {
   pinMode(big_battery_pin,INPUT);
   pinMode(small_battery_pin,INPUT);
   pinMode(relay_pin,OUTPUT);
   pinMode(mega_send,OUTPUT);
   pinMode(buzzer , OUTPUT);
-  
   TCCR3B = TCCR3B & B11111000 | B00000100;   // for PWM frequency of 122.55 Hz
   Serial.begin(9600);//for monitoring
   while(!Serial);
   fan_init();
   delay(500);
-//  fan_start(200);
+//fan_start(200);
   valve_init();
   unsigned int mappedValue = map(25, 0, 100, 0, 64000);
   Serial.println( mappedValue);
@@ -95,8 +92,8 @@ void setup() {
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
   rtc.begin();
-  
- //RTC_init();
+
+  //RTC_init();
   
   DHT11_init();
   DHT11_run();
@@ -107,7 +104,7 @@ void setup() {
  {
   digitalWrite(relay_pin,HIGH);
   EEPROM.write(battery_flag,1);
-  valve_start(mappedValue);
+ // valve_start(mappedValue);
  }
   // Initialize SIM800L driver with an internal buffer of 200 bytes and a reception buffer of 512 bytes, debug disabled
   sim800l = new SIM800L((Stream *)&Serial1, SIM800_RST_PIN, 200, 512);
@@ -159,7 +156,7 @@ void loop() {
     delay(1000);
   }
   else{}
-  if(((now.minute()%15) == 0) && (EEPROM.read(send_flag)==0) )
+  if(((now.minute()%5) == 0) && (EEPROM.read(send_flag)==0) )
   {
       RTC_run();
       DHT11_run();
@@ -168,7 +165,7 @@ void loop() {
    }                      
   else
     {
-      if(!((now.minute()%15 )==0))
+      if(!((now.minute()%5 )==0))
       {
 
         //Serial.println("not time for atmega");
