@@ -299,9 +299,17 @@ void send_data(){
     big_battery_percent = 100;
   }
  //  int readingtime = (now.hour()*4) + (now.minute()/15);   /**********uncomment****************/
-  sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\"}"
-          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, "60", "50", 0, CO2_value,"");
-  
+  if(lat[0] == '0' || lon[0] == '0')
+  {
+    
+    sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\"}"
+          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, "0.000000", "0.000000", 0, CO2_value,"");
+  }
+  else
+  {
+    sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\"}"
+          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, lat, lon, 0, CO2_value,"");
+  }
   /*******************uncomment also********************/
   /*
   sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\",\"ReadingNumber\":\"%d\"}"
