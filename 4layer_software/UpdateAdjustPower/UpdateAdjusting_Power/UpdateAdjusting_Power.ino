@@ -251,36 +251,22 @@ void set_ref()
   Counter_Set = 1;
   Serial.print("Original Reff:");
   Serial.println(analogRead(A2));
-  while(analogRead(A2)<970 || analogRead(A2)>985)
+  while(analogRead(A2)<940 || analogRead(A2)>960)
   {
-    if(analogRead(A2) >985)
+    if(analogRead(A2) >960)
    {
     voltage += 2;
     analogWrite(9,voltage);      // Control Power 
     delay(5);
    }
-  else if(analogRead(A2) <970)
+  else if(analogRead(A2) <940)
    {
     voltage -= 2;
     analogWrite(9,voltage);      // Control Power 
     delay(5);
    }
   }
-  if(analogRead(A2) >=930 && analogRead(A2) <940)
-  {
-    frequency = 40000;
-  }
-  else if(analogRead(A2) >=940 && analogRead(A2) <950)
-  {
-    frequency = 44000;
-  }
-  else if (analogRead(A2) >=950 && analogRead(A2) <960)
-  {
-    frequency = 48000;
-  }
-  SetPinFrequencySafe(9, frequency);
-  Serial.print("Frequency:");
-  Serial.println(frequency);
+ 
   ref1=analogRead(A2);
   while(millis() < 40000)
   {
