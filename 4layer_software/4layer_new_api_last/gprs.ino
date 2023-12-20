@@ -298,18 +298,19 @@ void send_data(){
   {
     big_battery_percent = 100;
   }
- //  int readingtime = (now.hour()*4) + (now.minute()/15);   /**********uncomment****************/
-  if(lat[0] == '0' || lon[0] == '0')
+  if(lat[0]== '0'||lon[0]=='0')
   {
-    
     sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\"}"
-          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, "0.000000", "0.000000", 0, CO2_value,"");
+          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, "0.000000", "0.000000", 0, CO2_value,counter[4]);
   }
   else
   {
     sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\"}"
-          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, lat, lon, 0, CO2_value,"");
+          , small, meduim, large , fly, big_battery_percent, small_battery_percent ,temperature, Serialnumber,temperature, humidity , Date, Time, lat, lon, 0, CO2_value,counter[4]);
   }
+ //  int readingtime = (now.hour()*4) + (now.minute()/15);   /**********uncomment****************/
+  
+  
   /*******************uncomment also********************/
   /*
   sprintf(data, "{\"counter\":\"1\",\"readingsmall\":\"%s\",\"readingMosuqitoes\":\"%s\",\"readingLarg\":\"%s\",\"readingFly\":\"%s\",\"BigBattery\":\"%d\",\"SmallBattery\":\"%d\",\"readingTempIn\":\"%d\",\"serlNum\":%s,\"readingTempOut\":\"%d\",\"readingHumidty\":\"%d\",\"readingDate\":\"%s\",\"readingTime\":\"%s\",\"readingLat\":\"%s\",\"readingLng\":\"%s\",\"readingWindSpeed\":\"%d\",\"co2\":\"%d\",\"co2Val\":\"%d\",\"isDone\":\"true\",\"isClean\":\"%s\",\"ReadingNumber\":\"%d\"}"
@@ -407,7 +408,7 @@ void send_data(){
     Serial.print(sim800l->getDataSizeReceived());
     Serial.println(F(" bytes)"));
     Serial.print(F("Received Serial: "));
-    //Serial.println(sim800l->getDataReceived());
+    Serial.println(sim800l->getDataReceived());
        } 
   else {
     // Failed...
@@ -460,7 +461,7 @@ void sendsd(void)
    line.toCharArray(data,400);
    // Serial.println(data);
    wdt_enable(WDTO_8S);
-   Serial.println(F("Start HTTP POST Data..."));
+   Serial.println(F("Start HTTP SD POST Data..."));
    // Do HTTP POS"T communication with 10s for the timeout (read and write)
    rc = sim800l->doPost(URL2, CONTENT_TYPE, data, 20000, 20000);
 
@@ -470,7 +471,7 @@ void sendsd(void)
      Serial.print(sim800l->getDataSizeReceived());
      Serial.println(F(" bytes)"));
      Serial.print(F("Received Serial : "));
-     //Serial.println(sim800l->getDataReceived());
+     Serial.println(sim800l->getDataReceived());
           } 
    else {
      // Failed...

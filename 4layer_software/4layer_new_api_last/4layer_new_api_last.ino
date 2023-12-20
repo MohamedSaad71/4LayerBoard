@@ -78,7 +78,7 @@ void setup() {
   while(!Serial);
   fan_init();
   delay(500);
-//fan_start(200);
+  fan_start(200);
   valve_init();
   unsigned int mappedValue = map(25, 0, 100, 0, 64000);
   Serial.println( mappedValue);
@@ -104,7 +104,7 @@ void setup() {
  {
   digitalWrite(relay_pin,HIGH);
   EEPROM.write(battery_flag,1);
- // valve_start(mappedValue);
+  valve_start(mappedValue);
  }
   // Initialize SIM800L driver with an internal buffer of 200 bytes and a reception buffer of 512 bytes, debug disabled
   sim800l = new SIM800L((Stream *)&Serial1, SIM800_RST_PIN, 200, 512);
@@ -161,7 +161,7 @@ void loop() {
       RTC_run();
       DHT11_run();
       send_data();
-      EEPROM.write(send_flag,1);              
+      EEPROM.write(send_flag,1); 
    }                      
   else
     {
