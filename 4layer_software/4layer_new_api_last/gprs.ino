@@ -90,9 +90,7 @@ void receiveEvent(int howMany)
 //save stm data to eeprom
 void ReceiveData_counter()
 {
-   digitalWrite(mega_send,HIGH);
-   delay(2000);
-   digitalWrite(mega_send,LOW);
+   Serial2.write('S');
    Serial.print("Data Received: ");
 // Serial.println(counter);
    old_small = EEPROM.read(3);
