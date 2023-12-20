@@ -1,6 +1,6 @@
 char APN[30] = " TM"; //char APN[30] = "internet.vodafone.net" ;//Internet.be
 char check[100];//used to recieve data from website
-char data[400]; //used to collect and send data 
+char data[450]; //used to collect and send data 
 char emergency[100];//used to collect emergency data
 uint16_t rc = 0;//to document http reply
 const char CONTENT_TYPE[] = "application/json";
@@ -91,6 +91,7 @@ void receiveEvent(int howMany)
 void ReceiveData_counter()
 {
    Serial2.write('S');
+   delay(1000); 
    Serial.print("Data Received: ");
 // Serial.println(counter);
    old_small = EEPROM.read(3);
@@ -100,16 +101,16 @@ void ReceiveData_counter()
    old_meduim = EEPROM.read(4);
    new_meduim = counter[1].toInt() + old_meduim; 
    EEPROM.write(4, new_meduim);
-
+   
    old_fly = EEPROM.read(7);
    new_fly = counter[2].toInt() + old_fly;
    EEPROM.write(7, new_fly);
-
+   
    old_large = EEPROM.read(5);
    new_large = counter[3].toInt() + old_large;
    EEPROM.write(5, new_large);
 
-   
+ 
 
    String small_read_ee  = String(EEPROM.read(3));
    String meduim_read_ee = String(EEPROM.read(4));
@@ -421,6 +422,8 @@ void send_data(){
   EEPROM.write(5,0);
   EEPROM.write(7,0);
 // send data from sd card of a given day
+ Serial.print(F("GPRS connected with IP "));
+  Serial.println(sim800l->getIP());
   sendsd();
   wdt_disable();
 
@@ -458,8 +461,8 @@ void sendsd(void)
  while (myfile.available() )
  {
    String line = myfile.readStringUntil('\n'); // read a line from the file
-   line.toCharArray(data,400);
-   // Serial.println(data);
+   line.toCharArray(data,450);
+    Serial.println(data);
    wdt_enable(WDTO_8S);
    Serial.println(F("Start HTTP SD POST Data..."));
    // Do HTTP POS"T communication with 10s for the timeout (read and write)
@@ -478,7 +481,8 @@ void sendsd(void)
      Serial.print(F("HTTP POST data error "));
      Serial.println(rc);
          }
-
+Serial.print(F("GPRS connected with IP "));
+  Serial.println(sim800l->getIP());
    wdt_disable();
  }
  closeFile();
