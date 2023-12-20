@@ -1,0 +1,14 @@
+5 Working Branches 
+Power Range 960:940 and starting with 110
+Reff: 937
+Detect Small objects
+
+4 Working Branches (Out4 is Zero)
+Power Range 960:940 and starting with 110
+Reff: 930
+Detect Small objects
+
+3 Working Branches (Out4,3 are Zeros)
+Power Range 960:940 and starting with 110
+Reff: 939
+Best Performance 
