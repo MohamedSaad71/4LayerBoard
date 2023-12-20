@@ -101,13 +101,15 @@ void ReceiveData_counter()
    new_meduim = counter[1].toInt() + old_meduim; 
    EEPROM.write(4, new_meduim);
 
+   old_fly = EEPROM.read(7);
+   new_fly = counter[2].toInt() + old_fly;
+   EEPROM.write(7, new_fly);
+
    old_large = EEPROM.read(5);
-   new_large = counter[2].toInt() + old_large;
+   new_large = counter[3].toInt() + old_large;
    EEPROM.write(5, new_large);
 
-   old_fly = EEPROM.read(7);
-   new_fly = counter[3].toInt() + old_fly;
-   EEPROM.write(7, new_fly);
+   
 
    String small_read_ee  = String(EEPROM.read(3));
    String meduim_read_ee = String(EEPROM.read(4));
