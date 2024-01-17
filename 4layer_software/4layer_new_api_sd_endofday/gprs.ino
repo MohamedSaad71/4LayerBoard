@@ -23,6 +23,7 @@ char meduim[8];
 char large[8];
 char fly[8];
 
+
 //flags to create new file in case of date change
 int Day_flag=0;
 int Month_flag=0;
@@ -286,6 +287,7 @@ void send_data(){
   Serial.print(" ppm");
    big_battery_percent = map(analogRead(big_battery_pin),0,980,0,100);
   small_battery_percent = map(analogRead(small_battery_pin),0,1010,0,100);
+ // int fan_val = map(analogRead(en_fan,0,1010,0,100);
 
   if(small_battery_percent <0)
   {
@@ -424,7 +426,11 @@ void send_data(){
 // send data from sd card of a given day
  Serial.print(F("GPRS connected with IP "));
   Serial.println(sim800l->getIP());
-  sendsd();
+  sendsd(sdrequest);
+   if(now.hour() == 11 && now.minute() >= 30 && now.minute()<44){
+  sendsd(filename);
+  }
+ 
   wdt_disable();
 
   Serial.print("resetting");
@@ -455,9 +461,9 @@ void connect_check(){
 }
 
 
-void sendsd(void)
+void sendsd(String requested)
 {
- myfile = SD.open(sdrequest, FILE_READ);
+ myfile = SD.open(requested, FILE_READ);
  while (myfile.available() )
  {
    String line = myfile.readStringUntil('\n'); // read a line from the file

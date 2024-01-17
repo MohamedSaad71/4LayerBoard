@@ -60,7 +60,7 @@ char filename[30]; //array of characters in which the string value of FilName_SD
 float v400 = 4.535; //variable for co2 sensor
 float v40000 = 3.206; //variable for co2 sensor
 
-const char Serialnumber[]= "\"eg-123-2020-098164\"";
+const char Serialnumber[]= "\"eg-123-2020-098165\"";
 
 // Define the input and output ranges
 const int INPUT_START = 1;
@@ -156,7 +156,7 @@ void loop() {
     delay(1000);
   }
   else{}
-  if(((now.minute()%5) == 0) && (EEPROM.read(send_flag)==0) )
+  if(((now.minute()%15) == 0) && (EEPROM.read(send_flag)==0) )
   {
       RTC_run();
       DHT11_run();
@@ -165,7 +165,7 @@ void loop() {
    }                      
   else
     {
-      if(!((now.minute()%5 )==0))
+      if(!((now.minute()%15 )==0))
       {
 
         //Serial.println("not time for atmega");
