@@ -427,7 +427,7 @@ void send_data(){
  Serial.print(F("GPRS connected with IP "));
   Serial.println(sim800l->getIP());
   sendsd(sdrequest);
-   if(now.hour() == 11 && now.minute() >= 30 && now.minute()<44){
+   if(now.hour() == 23 && now.minute() >= 30 && now.minute()<44){
   sendsd(filename);
   }
  
